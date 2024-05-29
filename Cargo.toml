@@ -1,0 +1,12 @@
+[workspace]
+members = ["chafa-sys"]
+
+[package]
+name = "chafa"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chafa-sys = { path = "chafa-sys" }
+image = "0.23.14" # highest version that works with rustc v1.65
+# vendored C libs: chafa and glib-2.0
