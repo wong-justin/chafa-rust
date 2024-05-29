@@ -18,8 +18,10 @@ fn main() {
 }
 ```
 
-| ![original flowery image](examples/test.png) | ![flowery image displayed in terminal](examples/output_capture.png) |   |   |   |
-|----------------------------------------------|---------------------------------------------------------------------|---|---|---|
+| Before                                       | After                                                               |
+|----------------------------------------------|---------------------------------------------------------------------|
+| ![original flowery image](examples/test.png) | ![flowery image displayed in terminal](examples/output_capture.png) |
+|----------------------------------------------|---------------------------------------------------------------------|
 
 Note: I'm new to both `chafa` and Rust's FFI binding process, so things may be a bit broken.
 
