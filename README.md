@@ -6,7 +6,7 @@ Rust bindings for [chafa](https://github.com/hpjansson/chafa)
 
 `examples/image2ansi.rs`
 
-```
+```rust
 use chafa::{image2ansi, Config};
 
 fn main() {
@@ -18,6 +18,9 @@ fn main() {
 }
 ```
 
-Note: I'm new to both `chafa` and Rust's FFI binding process, so things may be broken or ugly.
+| ![original flowery image](examples/test.png) | ![flowery image displayed in terminal](examples/output_capture.png) |   |   |   |
+|----------------------------------------------|---------------------------------------------------------------------|---|---|---|
+
+Note: I'm new to both `chafa` and Rust's FFI binding process, so things may be a bit broken.
 
 Looking for help: configuring builds + compilation, especially for Windows and Mac
