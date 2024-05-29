@@ -1,6 +1,6 @@
 # chafa-rust (wip)
 
-Rust bindings for [chafa](https://github.com/hpjansson/chafa)
+Rust bindings for [chafa](https://github.com/hpjansson/chafa), a library for displaying images in the terminal.
 
 ## Demo
 
@@ -30,7 +30,7 @@ fn main() {
 
 - `cd chafa-rust && cargo build`
 
-- Confirm that the example works with `cargo run --example image2ansi`
+- Confirm that the example works by running `cargo run --example image2ansi`
 
 ---
 

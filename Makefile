@@ -37,13 +37,7 @@
 # this separation makes compile times faster,
 # and that's the convention for rust binding projects.
 
-
-# also note:
-# glib license is LGPL-2.1-or-later (https://docs.gtk.org/glib/)
-# and chafa license is LGPL-3.0 (https://github.com/hpjansson/chafa)
-
-
-build: chafa-sys/* Cargo.toml
+build: chafa-sys/* src/* Cargo.toml /usr/local/include/chafa /usr/include/glib-2.0
 	cargo build
 
 test:
