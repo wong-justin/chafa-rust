@@ -1,11 +1,11 @@
 use chafa::{image2ansi, Config, Symbols};
 
 fn main() {
-    let ansi_output = image2ansi("examples/test.png", Config{ 
-        dst_width : 33,
-        dst_height : 16,
-    });
-    println!("{}", ansi_output);
+    let output = image2ansi("examples/test.png", Config{ 
+        cols: 33,
+        rows: 16,
         quality: 0.9,
         symbols: Symbols::BLOCK | Symbols::BRAILLE,
+    }).unwrap();
+    println!("{}", output);
 }

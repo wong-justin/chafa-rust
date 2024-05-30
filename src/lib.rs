@@ -41,24 +41,23 @@ pub mod Symbols {
 }
 
 pub struct Config {
-    // src_width: u32,
-    // src_height: u32,
-    pub dst_width: u32,
-    pub dst_height: u32,
+    pub cols: u32, // terminal cols
+    pub rows: u32, // terminal rows
     pub quality: f32, // work_factor, 0-1
     pub symbols: i32 // chafa bitflags
     // font_ratio: f32,
 }
 
-// TODO potentially:
+
+// TODO potential functions:
 //
 // fn image2pixels - when you need image data but don't want to display yet
 // fn pixels2ansi - when frames come from other sources, like reading video frames
-// fn images2ansi - keep the canvas around for continuous use
+// fn images2ansi - keep the canvas around for continuous use, eg. animated gifs
 
 
 // very similar to: https://hpjansson.org/chafa/ref/chafa-using.html
-pub fn image2ansi<P>(path: P, config: Config) -> String
+pub fn image2ansi<P>(path: P, config: Config) -> Result<String, image::ImageError>
     where P: AsRef<std::path::Path> 
 {
 
@@ -72,9 +71,9 @@ pub fn image2ansi<P>(path: P, config: Config) -> String
         // MIT license, many millions of downloads, created ~2021
         // 8.75MB feels awful heavy though
         // 
-        let img : ImageBuffer<image::Rgba<u8>, Vec<u8>> = image::open(path).unwrap().to_rgba8();
+        let img : ImageBuffer<image::Rgba<u8>, Vec<u8>> = image::open(path)?.to_rgba8();
 
-        // chafa only has variations of 8bit rgb channels...
+        // chafa has variations of 8bit rgb channels...
         //
         // CHAFA_PIXEL_RGBA8_PREMULTIPLIED
         // CHAFA_PIXEL_BGRA8_PREMULTIPLIED
@@ -100,11 +99,11 @@ pub fn image2ansi<P>(path: P, config: Config) -> String
         // Bgr8
         // Bgra8
         //
-        // I'll just convert everything to a common channel format for now
+        // I'll just force rgba8 for now
 
-        let N_CHANNELS = 4; // = img.color().channel_count().into();
-        let PIX_WIDTH : i32 = img.width().try_into().unwrap();
-        let PIX_HEIGHT : i32 = img.height().try_into().unwrap();
+        let num_channels = 4; // since everything is rgba8 // = img.color().channel_count().into();
+        let src_width : i32 = img.width().try_into().unwrap();
+        let src_height : i32 = img.height().try_into().unwrap();
         let pixels : Vec<u8> = img.into_raw();
 
         // or test with made-up pixel buffer
@@ -119,7 +118,7 @@ pub fn image2ansi<P>(path: P, config: Config) -> String
         unsafe {
             // --- CHAFA CONFIG --- //
         
-            // important performance note:
+            // performance note:
             // "The number of available symbols is a significant factor in the speed...
             // For the fastest possible operation you could use a single symbol --
             // CHAFA_SYMBOL_TAG_VHALF works well by itself."
@@ -133,8 +132,8 @@ pub fn image2ansi<P>(path: P, config: Config) -> String
 
             let canvas_config = chafa_canvas_config_new();
             chafa_canvas_config_set_geometry(canvas_config, 
-                                             config.dst_width as i32,
-                                             config.dst_height as i32);
+                                             config.cols as i32,
+                                             config.rows as i32);
             chafa_canvas_config_set_symbol_map(canvas_config, symbol_map);
             chafa_canvas_config_set_work_factor(canvas_config, config.quality);
 
@@ -145,15 +144,15 @@ pub fn image2ansi<P>(path: P, config: Config) -> String
             chafa_canvas_draw_all_pixels(canvas,
                                          ChafaPixelType_CHAFA_PIXEL_RGBA8_UNASSOCIATED,
                                          pixels.as_ptr(),
-                                         PIX_WIDTH,
-                                         PIX_HEIGHT,
-                                         PIX_WIDTH * N_CHANNELS); // rowstride
+                                         src_width,
+                                         src_height,
+                                         src_width * num_channels); // rowstride
 
             // deperecated since chafa v1.6, even tho it's simpler
             let gstr : *mut _GString = chafa_canvas_build_ansi(canvas);
 
-            // encouraged alternative to chafa_canvas_build_ansi(), 
-            // but I haven't figured out the term_info part yet
+            // or this encouraged alternative to chafa_canvas_build_ansi(), 
+            // although I haven't figured out the term_info part yet:
             // let term_info = chafa_term_info_new();
             // let gstr : *mut _GString = chafa_canvas_print(canvas, term_info); 
 
@@ -176,7 +175,7 @@ pub fn image2ansi<P>(path: P, config: Config) -> String
             chafa_canvas_config_unref(canvas_config);
             chafa_symbol_map_unref(symbol_map);
             // chafa_term_info_unref(term_info);
-            return result;
+            return Ok(result);
         };
 }
 
@@ -240,7 +239,7 @@ pub fn image2ansi<P>(path: P, config: Config) -> String
 //    └───┘                     │      │          │      │ 
 //                              └──────└──────────┘──────┘ 
 //
-// Canvas hold Image, and Image holds Frame
+// Canvas holds Image, and Image holds Frame
 
 
 
