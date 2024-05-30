@@ -1,4 +1,5 @@
 use chafa::{image2ansi, Config};
+use chafa::{image2ansi, Config, Symbols};
 
 fn main() {
     let ansi_output = image2ansi("examples/test.png", Config{ 
@@ -6,4 +7,5 @@ fn main() {
         dst_height : 16,
     });
     println!("{}", ansi_output);
+        symbols: Symbols::BLOCK | Symbols::BRAILLE,
 }

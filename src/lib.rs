@@ -4,13 +4,49 @@ pub use chafa_sys::*;
 
 use image::ImageBuffer;
 
+// hacky bitflags
+pub mod Symbols {
+    pub const NONE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_NONE;
+    pub const SPACE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_SPACE;
+    pub const SOLID : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_SOLID;
+    pub const STIPPLE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_STIPPLE;
+    pub const BLOCK : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BLOCK;
+    pub const BORDER : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BORDER;
+    pub const DIAGONAL : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_DIAGONAL;
+    pub const DOT : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_DOT;
+    pub const QUAD : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_QUAD;
+    pub const HHALF : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_HHALF;
+    pub const VHALF : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_VHALF;
+    pub const HALF : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_HALF;
+    pub const INVERTED : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_INVERTED;
+    pub const BRAILLE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BRAILLE;
+    pub const TECHNICAL : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_TECHNICAL;
+    pub const GEOMETRIC : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_GEOMETRIC;
+    pub const ASCII : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ASCII;
+    pub const ALPHA : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALPHA;
+    pub const DIGIT : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_DIGIT;
+    pub const ALNUM : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALNUM;
+    pub const NARROW : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_NARROW;
+    pub const WIDE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_WIDE;
+    pub const AMBIGUOUS : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_AMBIGUOUS;
+    pub const UGLY : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_UGLY;
+    pub const LEGACY : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_LEGACY;
+    pub const SEXTANT : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_SEXTANT;
+    pub const WEDGE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_WEDGE;
+    pub const LATIN : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_LATIN;
+    pub const IMPORTED : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_IMPORTED;
+    pub const EXTRA : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_EXTRA;
+    pub const BAD : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BAD;
+    pub const ALL : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALL;
+}
+
 pub struct Config {
     // src_width: u32,
     // src_height: u32,
     pub dst_width: u32,
     pub dst_height: u32,
+    pub symbols: i32 // chafa bitflags
     // font_ratio: f32,
-    // symbol_tags: i32?
 }
 
 // TODO potentially:
@@ -90,8 +126,8 @@ pub fn image2ansi<P>(path: P, config: Config) -> String
             // https://hpjansson.org/chafa/ref/chafa-ChafaSymbolMap.html
 
             let symbol_map = chafa_symbol_map_new();
-            chafa_symbol_map_add_by_tags(symbol_map, ChafaSymbolTags_CHAFA_SYMBOL_TAG_BLOCK);
-            // chafa_symbol_map_add_by_tags(symbol_map, ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALL);
+
+            chafa_symbol_map_add_by_tags(symbol_map, config.symbols);
             // chafa_symbol_map_remove_by_tags(symbol_map, ChafaSymbolTags_CHAFA_SYMBOL_TAG_BRAILLE);
 
             let canvas_config = chafa_canvas_config_new();
@@ -171,6 +207,9 @@ pub fn image2ansi<P>(path: P, config: Config) -> String
 // pub type ChafaSymbolTags = :: std :: os :: raw :: c_int
 // const ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALL : ChafaSymbolTags = - 1075314689
 // fn chafa_symbol_map_add_by_tags (symbol_map : * mut ChafaSymbolMap , tags : ChafaSymbolTags) 
+// chafa_symbol_map_add_by_range( ..., gunichar first, gunichar last)
+// type gunichar = guint32
+// https://doc.rust-lang.org/std/primitive.char.html
   
   
 // struct ChafaTermInfo { _unused : [u8 ; 0] , } 
