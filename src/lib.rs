@@ -45,6 +45,7 @@ pub struct Config {
     // src_height: u32,
     pub dst_width: u32,
     pub dst_height: u32,
+    pub quality: f32, // work_factor, 0-1
     pub symbols: i32 // chafa bitflags
     // font_ratio: f32,
 }
@@ -135,6 +136,7 @@ pub fn image2ansi<P>(path: P, config: Config) -> String
                                              config.dst_width as i32,
                                              config.dst_height as i32);
             chafa_canvas_config_set_symbol_map(canvas_config, symbol_map);
+            chafa_canvas_config_set_work_factor(canvas_config, config.quality);
 
             let canvas = chafa_canvas_new(canvas_config);
 

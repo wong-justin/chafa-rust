@@ -1,4 +1,3 @@
-use chafa::{image2ansi, Config};
 use chafa::{image2ansi, Config, Symbols};
 
 fn main() {
@@ -7,5 +6,6 @@ fn main() {
         dst_height : 16,
     });
     println!("{}", ansi_output);
+        quality: 0.9,
         symbols: Symbols::BLOCK | Symbols::BRAILLE,
 }
