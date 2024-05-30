@@ -37,11 +37,22 @@
 # this separation makes compile times faster,
 # and that's the convention for rust binding projects.
 
+
 build: chafa-sys/* src/* Cargo.toml /usr/local/include/chafa /usr/include/glib-2.0
 	cargo build
+	make docs
 
 test:
 	cargo test
 
+# some dev dependencies that i find useful:
+# - entr, for livereloading
+# - m4, for text file templating
 dev:
 	find *.rs **/*.rs | entr -cs 'cargo run --example image2ansi'
+
+# had to declare phony since there's a directory also called docs/
+# m4 injects src code into readme so it automatically stays updated
+.PHONY: docs
+docs: docs/readme_template.md examples/image2ansi.rs
+	m4 -I. docs/readme_template.md > README.md
