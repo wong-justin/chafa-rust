@@ -26,6 +26,8 @@ fn main() {
 
 ## Build
 
+- Uses `rustc --version` `1.65.0`
+
 - Dependencies: `chafa` and `glib` must be installed. See the [chafa installation page](https://hpjansson.org/chafa/download/), the [compilation page](https://hpjansson.org/chafa/ref/chafa-building.html), and my notes at `chafa-sys/build.rs::main`.
 
 - `git clone https://github.com/wong-justin/chafa-rust.git`
