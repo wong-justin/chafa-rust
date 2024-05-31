@@ -7,7 +7,7 @@ Rust bindings for [chafa](https://github.com/hpjansson/chafa), a library for dis
 
 ## Demo
 
-`examples/image2ansi.rs`
+Using a convenience function: `examples/image2ansi.rs`
 
 ```rust
 include({{examples/image2ansi.rs}})dnl
@@ -16,6 +16,12 @@ include({{examples/image2ansi.rs}})dnl
 | Before                                       | After                                                               |
 |----------------------------------------------|---------------------------------------------------------------------|
 | ![original flowery image](examples/test.png) | ![flowery image displayed in terminal](examples/output_capture.png) |
+
+Or using the normal chafa API: `examples/demo.rs`
+
+```rust
+include({{examples/demo.rs}})dnl
+```
 
 ## Build
 

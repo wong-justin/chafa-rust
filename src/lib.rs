@@ -40,14 +40,173 @@ pub mod Symbols {
     pub const ALL : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALL;
 }
 
+pub mod PixelType {
+    // std::os::raw:c_uint is pretty much u32
+    pub const RGBA8_PREMULTIPLIED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_RGBA8_PREMULTIPLIED;
+    pub const BGRA8_PREMULTIPLIED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_BGRA8_PREMULTIPLIED;
+    pub const ARGB8_PREMULTIPLIED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ARGB8_PREMULTIPLIED;
+    pub const ABGR8_PREMULTIPLIED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ABGR8_PREMULTIPLIED;
+    pub const RGBA8_UNASSOCIATED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_RGBA8_UNASSOCIATED;
+    pub const BGRA8_UNASSOCIATED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_BGRA8_UNASSOCIATED;
+    pub const ARGB8_UNASSOCIATED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ARGB8_UNASSOCIATED;
+    pub const ABGR8_UNASSOCIATED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ABGR8_UNASSOCIATED;
+    pub const RGB8 : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_RGB8;
+    pub const BGR8 : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_BGR8;
+}
+
+// --- structs holding C pointers and associated functions --- //
+
+pub struct SymbolMap {
+    // struct ChafaSymbolMap { _unused : [u8 ; 0] , }
+    _ptr: *mut ChafaSymbolMap,
+}
+
+pub type SymbolTagsFlag = i32;
+pub type PixelTypeFlag = u32;
+
+impl SymbolMap {
+    pub fn new() -> Self {
+        unsafe {
+            Self {
+                _ptr : chafa_sys::chafa_symbol_map_new()
+            }
+        }
+    }
+
+    pub fn add_by_tags(&self, symbol_tags : SymbolTagsFlag) {
+        unsafe {
+            chafa_symbol_map_add_by_tags(self._ptr, symbol_tags);
+        }
+    }
+
+    // TODO:
+    // remove_by_tags
+    // add_by_range
+    // remove_by_range
+}
+
+impl core::ops::Drop for SymbolMap {
+    fn drop(&mut self) {
+        unsafe {
+            chafa_symbol_map_unref(self._ptr);
+        }
+    }
+}
+
 pub struct Config {
+    _ptr: *mut ChafaCanvasConfig,
+}
+
+impl Config {
+    pub fn new() -> Self {
+        unsafe {
+            Self {
+                _ptr : chafa_sys::chafa_canvas_config_new()
+            }
+        }
+    }
+
+    pub fn set_geometry(&self, width : i32, height : i32) {
+        unsafe {
+            chafa_sys::chafa_canvas_config_set_geometry(self._ptr, 
+                                                        width,
+                                                        height);
+        }
+    }
+
+    pub fn set_symbol_map(&self, symbol_map : SymbolMap) {
+        unsafe {
+            chafa_sys::chafa_canvas_config_set_symbol_map(self._ptr,
+                                                          symbol_map._ptr);
+        }
+    }
+
+    // TODO:
+    // set_work_factor()
+    // ...
+    // and all the other config options
+}
+
+impl core::ops::Drop for Config {
+    fn drop(&mut self) {
+        unsafe {
+            chafa_canvas_config_unref(self._ptr);
+        }
+    }
+}
+
+pub struct Canvas {
+    _ptr: *mut ChafaCanvas,
+}
+
+impl Canvas {
+    pub fn new(config : Config) -> Self {
+        unsafe {
+            Self {
+                _ptr : chafa_sys::chafa_canvas_new(config._ptr)
+            }
+        }
+    }
+
+    pub fn draw_all_pixels(&self,
+                                  pixel_type : PixelTypeFlag,
+                                  pixels : &[u8],
+                                  width: i32,
+                                  height: i32,
+                                  rowstride: i32) 
+    {
+        unsafe {
+         chafa_canvas_draw_all_pixels(self._ptr,
+                                      pixel_type,
+                                      pixels.as_ptr(),
+                                      width,
+                                      height,
+                                      rowstride);
+        }
+    }
+
+    pub fn build_ansi(&self) -> String {
+        unsafe {
+            let gstr : *mut _GString = chafa_canvas_build_ansi(self._ptr);
+
+            // wrapping raw bytes of C strings into friendly Rust types,
+            // so output can be manipulated in Rust and passed to println,
+            // instead of using glib print helpers like
+            // g_print((*result_gstr).str_); or
+            // g_printerr((*result_gstr).str_);
+            //
+            // https://doc.rust-lang.org/std/ffi/struct.CStr.html
+            let cstr = std::ffi::CStr::from_ptr((*gstr).str_);
+            let result = String::from_utf8_lossy(cstr.to_bytes()).to_string();
+
+            g_string_free(gstr, 1);
+            return result;
+        }
+    }
+
+    // TODO:
+    // print(&self, term_info)
+    // and other functions
+}
+
+impl core::ops::Drop for Canvas {
+    fn drop(&mut self) {
+        unsafe {
+            chafa_canvas_unref(self._ptr);
+        }
+    }
+}
+
+// --- end of structs holding C pointers --- //
+
+
 // --- convience abstracted functions --- //
 
 pub struct QuickConfig {
     pub cols: u32, // terminal cols
     pub rows: u32, // terminal rows
     pub quality: f32, // work_factor, 0-1
-    pub symbols: i32 // chafa bitflags
+    pub symbols: SymbolTagsFlag // chafa bitflags
     // font_ratio: f32,
 }
 

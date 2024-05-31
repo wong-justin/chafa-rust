@@ -4,13 +4,13 @@ Rust bindings for [chafa](https://github.com/hpjansson/chafa), a library for dis
 
 ## Demo
 
-`examples/image2ansi.rs`
+Using a convenience function: `examples/image2ansi.rs`
 
 ```rust
-use chafa::{image2ansi, Config, Symbols};
+use chafa::{image2ansi, QuickConfig, Symbols};
 
 fn main() {
-    let output = image2ansi("examples/test.png", Config{ 
+    let output = image2ansi("examples/test.png", QuickConfig{ 
         cols: 33,
         rows: 16,
         quality: 0.9,
@@ -23,6 +23,44 @@ fn main() {
 | Before                                       | After                                                               |
 |----------------------------------------------|---------------------------------------------------------------------|
 | ![original flowery image](examples/test.png) | ![flowery image displayed in terminal](examples/output_capture.png) |
+
+Or using the normal chafa API: `examples/demo.rs`
+
+```rust
+use chafa::{Canvas, Config, PixelType, SymbolMap, Symbols};
+
+fn main() {
+    // see https://hpjansson.org/chafa/ref/chafa-using.html
+ 
+    const PIX_WIDTH : i32 = 3;
+    const PIX_HEIGHT : i32 = 3;
+    const N_CHANNELS : i32 = 4;
+    let pixels : [u8; (PIX_WIDTH * PIX_HEIGHT * N_CHANNELS) as usize] = [
+        0xff, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0xff,
+        0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0xff,
+        0xff, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0xff
+    ];
+
+    let symbol_map = SymbolMap::new();
+    symbol_map.add_by_tags(Symbols::ALL);
+
+    let config = Config::new();
+    config.set_geometry(23, 12);
+    config.set_symbol_map(symbol_map);
+
+    let canvas = Canvas::new(config);
+
+    canvas.draw_all_pixels(PixelType::RGBA8_UNASSOCIATED,
+                           &pixels,
+                           PIX_WIDTH,
+                           PIX_HEIGHT,
+                           PIX_WIDTH * N_CHANNELS);
+
+    let output : String = canvas.build_ansi();
+
+    println!("{}", output);
+}
+```
 
 ## Build
 
