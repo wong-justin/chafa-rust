@@ -1,6 +1,6 @@
 mod chafa;
 
-pub use chafa_sys::*;
+use chafa_sys::*;
 
 use image::ImageBuffer;
 

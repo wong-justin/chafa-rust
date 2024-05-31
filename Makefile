@@ -51,8 +51,10 @@ test:
 dev:
 	find *.rs **/*.rs | entr -cs 'cargo run --example image2ansi'
 
-# had to declare phony since there's a directory also called docs/
+# had to declare phony since there's a directory named docs/ clashes with this cmd
 # m4 injects src code into readme so it automatically stays updated
 .PHONY: docs
-docs: docs/readme_template.md examples/image2ansi.rs
+docs: src/* docs/readme_template.md examples/image2ansi.rs
+	cargo doc --no-deps --open
+	# cp -a target/doc/. docs/
 	m4 -I. docs/readme_template.md > README.md
