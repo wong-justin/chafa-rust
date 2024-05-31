@@ -1,6 +1,6 @@
 # chafa-rust (wip)
 
-Rust bindings for [chafa](https://github.com/hpjansson/chafa), a library for displaying images in the terminal.
+Rust bindings for [chafa](https://github.com/hpjansson/chafa), a terminal graphics library:
 
 > With chafa, you can now view very, very reasonable approximations of pictures and animations in the comfort of your favorite terminal emulator. The power of ANSI X3.64 compels you!
 
