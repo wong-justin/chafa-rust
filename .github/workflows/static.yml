@@ -1,5 +1,6 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Build rustdoc content and deploy to Pages
+# adapted from https://github.com/dnaka91/advent-of-code/blob/main/.github/workflows/docs.yml
+name: Rustdoc -> Pages
 
 on:
   # Runs on pushes targeting the default branch
