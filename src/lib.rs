@@ -41,6 +41,9 @@ pub mod Symbols {
 }
 
 pub struct Config {
+// --- convience abstracted functions --- //
+
+pub struct QuickConfig {
     pub cols: u32, // terminal cols
     pub rows: u32, // terminal rows
     pub quality: f32, // work_factor, 0-1
@@ -56,8 +59,9 @@ pub struct Config {
 // fn images2ansi - keep the canvas around for continuous use, eg. animated gifs
 
 
+// convenience function
 // very similar to: https://hpjansson.org/chafa/ref/chafa-using.html
-pub fn image2ansi<P>(path: P, config: Config) -> Result<String, image::ImageError>
+pub fn image2ansi<P>(path: P, config: QuickConfig) -> Result<String, image::ImageError>
     where P: AsRef<std::path::Path> 
 {
 
