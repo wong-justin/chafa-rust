@@ -5,6 +5,10 @@ dnl
 
 Rust bindings for [chafa](https://github.com/hpjansson/chafa), a library for displaying images in the terminal.
 
+> With chafa, you can now view very, very reasonable approximations of pictures and animations in the comfort of your favorite terminal emulator. The power of ANSI X3.64 compels you!
+> 
+> You can get fair results by using only U+2580 (upper half block). Pixterm, catimg and a few other terminal graphics printers do this, and so can Chafa with `chafa --symbols vhalf`. However, Chafa uses more symbols by default, greatly improving quality.
+
 ## Demo
 
 Using a convenience function: `examples/image2ansi.rs`
@@ -34,6 +38,10 @@ include({{examples/demo.rs}})dnl
 - `cd chafa-rust && cargo build`
 
 - Confirm that the example works by running `cargo run --example image2ansi`
+
+## Docs
+
+See the [chafa C API](https://hpjansson.org/chafa/ref/index.html).
 
 ---
 
