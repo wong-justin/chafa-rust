@@ -35,7 +35,7 @@ include({{examples/demo.rs}})dnl
 
 - `cd chafa-rust && cargo build`
 
-- Confirm that the example works by running `cargo run --example image2ansi`
+- Confirm that the example works by running `cargo test`
 
 ## Docs
 
