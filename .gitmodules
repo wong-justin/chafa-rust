@@ -1,0 +1,3 @@
+[submodule "chafa"]
+	path = chafa
+	url = https://github.com/hpjansson/chafa.git
