@@ -17,6 +17,7 @@ jobs:
     steps:
     - name: Install chafa for dynamic linking
       run: >
+        sudo apt-get purge needrestart;
         sudo apt-get install chafa;
         sudo ldconfig;
         ls /usr/local/bin | grep chafa;
