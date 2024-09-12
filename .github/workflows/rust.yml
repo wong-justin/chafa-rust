@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Install chafa for dynamic linking
-      run: apt install chafa
+      run: sudo apt-get install chafa
     - uses: actions/checkout@v4
     - name: Build
       run: cargo build --verbose
