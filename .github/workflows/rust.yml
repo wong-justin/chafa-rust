@@ -18,7 +18,7 @@ jobs:
     - name: Install chafa for dynamic linking
       run: sudo apt-get install chafa
     - name: Help pkg-config find chafa
-      run: ldconfig
+      run: sudo ldconfig
     - uses: actions/checkout@v4
     - name: Build
       run: cargo build --verbose
