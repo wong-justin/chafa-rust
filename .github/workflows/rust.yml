@@ -22,10 +22,7 @@ jobs:
     #     ls /usr/local/bin | grep chafa
     - uses: actions/checkout@v4
     - name: Install tools for building C
-      uses: BSFishy/meson-build@v1.0.3
-      with: 
-        action: build
-        directory: vendor/glib
+      run: sudo apt install python3-meson
     # - name: Build
     #   run: cargo build --verbose
     # - name: Run tests
