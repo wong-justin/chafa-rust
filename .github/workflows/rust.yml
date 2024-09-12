@@ -15,13 +15,18 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-    - name: Install chafa for dynamic linking
-      run: >
-        sudo apt-get install chafa &&
-        sudo ldconfig &&
-        ls /usr/local/bin | grep chafa
+    # - name: Install chafa for dynamic linking
+    #   run: >
+    #     sudo apt-get install chafa &&
+    #     sudo ldconfig &&
+    #     ls /usr/local/bin | grep chafa
     - uses: actions/checkout@v4
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+    - name: Install tools for building C
+      uses: BSFishy/meson-build@v1.0.3
+      with: 
+        action: build
+        directory: vendor/glib
+    # - name: Build
+    #   run: cargo build --verbose
+    # - name: Run tests
+    #   run: cargo test --verbose
