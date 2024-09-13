@@ -24,9 +24,10 @@ jobs:
     - name: Install tools for building C
       run: pipx install meson
     - name: Download glib source
+      working-directory: ./chafa-sys/
       run: >
-        mkdir chafa-sys/vendor/glib/
-        && cd chafa-sys/vendor/glib/
+        mkdir -p ./vendor
+        && cd ./vendor
         && git clone https://gitlab.gnome.org/GNOME/glib.git
     - name: Build glib
       working-directory: ./chafa-sys/vendor/glib
