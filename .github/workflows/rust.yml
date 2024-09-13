@@ -15,28 +15,31 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-    # - name: Install chafa for dynamic linking
-    #   run: >
-    #     sudo apt-get install chafa &&
-    #     sudo ldconfig &&
-    #     ls /usr/local/bin | grep chafa
-    - uses: actions/checkout@v4
-    - name: Install tools for building C
+    - name: Install chafa
       run: >
-        sudo pipx install meson
-        && sudo apt-get install ninja-build
-    - name: Download glib source
-      working-directory: ./chafa-sys/
-      run: >
-        mkdir -p ./vendor
-        && cd ./vendor
-        && git clone https://gitlab.gnome.org/GNOME/glib.git
-    - name: Build glib
-      working-directory: ./chafa-sys/vendor/glib
-      run: >
-        sudo meson setup _build
-        && sudo meson compile -C _build
-        && sudo meson install -C _build
+        sudo apt-get install chafa;
+        sudo ldconfig;
+        ls /usr/local/bin | grep chafa
+    
+    #- uses: actions/checkout@v4
+    #- name: Install tools for building C
+    #  run: >
+    #    sudo pipx install meson
+    #    && sudo apt-get install ninja-build
+    #- name: Download glib source
+    #  working-directory: ./chafa-sys/
+    #  run: >
+    #    mkdir -p ./vendor
+    #    && cd ./vendor
+    #    && git clone https://gitlab.gnome.org/GNOME/glib.git
+    #- name: Build glib
+    #  working-directory: ./chafa-sys/vendor/glib
+    #  run: >
+    #    sudo meson setup _build
+    #    && sudo meson compile -C _build
+    #    && sudo meson install -C _build
+    
+    
     # - name: Build
     #   run: cargo build --verbose
     # - name: Run tests
