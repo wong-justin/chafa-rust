@@ -23,6 +23,7 @@ jobs:
     - name: Check chafa installation
       run: >
         export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig";
+        echo $(ls /usr/local/lib/pkgconfig);
         echo "::debug $(pkg-config --libs --cflags chafa)"
     
     - uses: actions/checkout@v4
