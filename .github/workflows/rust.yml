@@ -34,9 +34,9 @@ jobs:
     - name: Build glib
       working-directory: ./chafa-sys/vendor/glib
       run: >
-        meson setup _build
-        && meson compile -C _build
-        && meson install -C _build
+        sudo meson setup _build
+        && sudo meson compile -C _build
+        && sudo meson install -C _build
     # - name: Build
     #   run: cargo build --verbose
     # - name: Run tests
