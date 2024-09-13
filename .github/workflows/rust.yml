@@ -19,7 +19,7 @@ jobs:
       run: >
         sudo apt-get install chafa;
         sudo ldconfig;
-      # ls /usr/local/bin | grep chafa
+        echo $(ls /usr/local/bin | grep chafa)
     
     - uses: actions/checkout@v4
     #- name: Install tools for building C
