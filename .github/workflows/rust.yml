@@ -23,7 +23,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install tools for building C
       run: >
-        pipx install meson
+        sudo pipx install meson
         && sudo apt-get install ninja-build
     - name: Download glib source
       working-directory: ./chafa-sys/
