@@ -32,8 +32,7 @@ jobs:
     - name: Build glib
       working-directory: ./chafa-sys/vendor/glib
       run: >
-        cd vendor/glib
-        && meson setup _build
+        meson setup _build
         && meson compile -C _build
         && meson install -C _build
     # - name: Build
