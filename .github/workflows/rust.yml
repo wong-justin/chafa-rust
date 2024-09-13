@@ -19,7 +19,9 @@ jobs:
       run: >
         sudo apt-get install chafa;
         sudo ldconfig;
-        echo $(ls /usr/local/bin | grep chafa)
+
+    - name: Check chafa installation
+        echo "::debug $(pkg-config --libs --cflags chafa)"
     
     - uses: actions/checkout@v4
       with:
