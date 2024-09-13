@@ -24,11 +24,12 @@ jobs:
     - name: Install tools for building C
       run: pipx install meson
     - name: Build glib
+      working-directory: ./vendor/glib
       run: >
         cd vendor/glib
-         && meson setup _build
-         && meson compile -C _build
-         && meson install -C _build
+        && meson setup _build
+        && meson compile -C _build
+        && meson install -C _build
     # - name: Build
     #   run: cargo build --verbose
     # - name: Run tests
