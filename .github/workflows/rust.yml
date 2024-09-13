@@ -22,6 +22,8 @@ jobs:
         echo $(ls /usr/local/bin | grep chafa)
     
     - uses: actions/checkout@v4
+      with:
+        ref: ghaction
     #- name: Install tools for building C
     #  run: >
     #    sudo pipx install meson
