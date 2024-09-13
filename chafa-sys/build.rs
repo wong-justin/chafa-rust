@@ -1,5 +1,14 @@
 use std::env;
 use std::path::PathBuf;
+use bindgen;
+// https://docs.rs/cc/latest/cc/#compile-time-requirements
+use cc;
+
+// a good summary of goals for a Rust bindings library:
+// https://internals.rust-lang.org/t/statically-linked-c-c-libraries/17175
+// other references:
+// https://patchwork.kernel.org/project/qemu-devel/patch/20210907121943.3498701-14-marcandre.lureau@redhat.com/#24435093
+// https://users.rust-lang.org/t/help-creating-a-sys-crate/12624/3
 
 // use bindgen; 
 // good: bindgen automates binding creation from C headers
@@ -24,8 +33,134 @@ use std::path::PathBuf;
 // https://stackoverflow.com/a/29728671
 
 
-fn main() {
+// to compile from C src:
+//
+// cc-rs crate, which handles compiles C on multiple platforms into static archives
+// 75KB? https://crates.io/crates/cc
+// more established
+//
+// or
+//
+// cargo-zigbuild, which uses zig as a great drop-in replacement for a C compiler
+// 35KB? https://crates.io/crates/cargo-zigbuild/0.17.3
+// new-age but promising
 
+fn main() {
+    // psuedocode goal for cargo install/build:
+    //
+    // match cfg feature/env::CHAFA_RUST_LINKING_TYPE {
+    //     build_dynamic => build_dynamic().expect("chafa and glib could not successfully be linked dynamically")
+    //     build_static => build_static().expect("chafa and glib could not be built from source")
+    //     _ => build_dynamic().if_failsthen(build_static)
+    //     or maybe _ => throw("must explicitly choose whether to build dynamic or static")
+    // }
+
+    // build_static();
+    build_dynamic();
+}
+
+fn build_static() {
+    // build chafa (and glib) from source, on any system
+    // they'll be linked statically I think
+    // wip / todo: fix
+
+    // println!("cargo:rustc-link-search=./vendor/glib/"); // didn't help me
+    // env::set_var("LD_LIBRARY_PATH", "./vendor/glib"); // didn't help me
+    // env::set_var("PKG_CONFIG_ALLOW_SYSTEM_CFLAGS", "1"); // didn't help me
+   
+    // trying to convert from vendor/glib/meson.build to manual linking incantations
+    // will be very difficult
+    // in vendor/glib:
+    // include_directories ., glib/, gobject, gmodule, gio, girepository
+    // 
+    // depends on libgirepository, liglib2.0
+    //
+    // libglib2.0-dev
+    // "this package is needed co compile programs against libglib2.0-0,
+    // as it onlly includes the header files and static libraries needed for compiling"
+    //
+    // ___
+    // EDIT - maybe a miracle:
+    // https://kornel.ski/rust-sys-crate#use-cc
+    //
+    // sometimes just listing all the .c files is enough to build with `cc`!
+    //
+    // example: https://github.com/kornelski/mozjpeg-sys/blob/384688f9c23e94ddeb353d414d45ede69768ec08/src/build.rs
+    //
+    // find . | grep '\.c$' | grep -v -e '/tests/ ' -e 'chafa/tools' -e 'glib/.gitlab-ci' -e 'glib/fuzzing'
+    //
+
+    let out_dir = std::env::var("OUT_DIR").unwrap();
+    // attempt at fixing ar: file not found error
+    std::fs::File::create(std::path::PathBuf::from(&out_dir).join("libchafa.a")); 
+
+
+    let source_c_files = std::fs::read_dir("vendor/glib")
+        .unwrap()
+        .filter_map(|entry| {
+            let path = &entry.expect("couldn't unwrap entry inside vendor/").path();
+            let pathstr = path.to_str().expect("couldn't convert path to string");
+            match (
+                path.is_file() &
+                path.ends_with(".c") &
+                !pathstr.contains("tests/") &
+                !pathstr.contains("tools/") &
+                !pathstr.contains("fuzzing/")
+            ) {
+                true => Some(String::from(pathstr)),
+                false => None
+            }
+        });
+
+    // println!("cargo:rustc-env=AR=ar");
+    // println!("cargo:rustc-env=CC=cmd.exe /C zig cc");
+    // println!("cargo:rustc-env=CC_ENABLE_DEBUG_OUTPUT=1");
+
+    cc::Build::new()
+        // .include("vendor/")
+        .files(source_c_files)
+        // .file("vendor/glib/glib/glib.h")
+        // .file("vendor/chafa/chafa/chafa.h")
+        // .file("./vendor/glib/glib/glibconfig.h.in")
+        .compile("chafa");
+    // maybe try manually compiling into objects,
+    // then manually linking/stuffing into archive?
+
+    println!("{}", out_dir);
+
+    // seems to find all C files,
+    // but can't find libchafa.a archive in the target outdir
+    // supposed to assemble at get_out_dir()
+    // https://github.com/rust-lang/cc-rs/blob/e6e29d873604a14912fa130f4c568bca5062d18a/src/lib.rs#L1277
+    //
+    // aside: a library archive is a bunch of objects in a bucket i guess
+    // cc makes a library ardhive rather than command-line listing all object files
+    // because the command-line may have character limits.
+    // also: GNU convention is to name the archive "lib{actualname}.a"
+   
+
+
+
+
+    // println!("cargo:rustc-link-search=./vendor/glib/"); // didn't help me
+    // println!("cargo:rustc-link-search={}", env::var("OUT_DIR").unwrap());
+
+    // let bindings = bindgen::Builder::default()
+    //     .header("wrapper.h")
+    //     .clang_arg("-I./vendor/chafa/chafa/")
+    //     .clang_arg("-I./vendor/glib/glib/")
+    //     .generate()
+    //     .expect("Unable to generate bindings");
+
+    // let out_dir = env::var("OUT_DIR").unwrap();
+    // bindings
+    //     .write_to_file(PathBuf::from(out_dir).join("bindings.rs"))
+    //     .expect("Couldn't write bindings")
+}
+
+fn build_dynamic() {
+    // expecting glib and chafa already installed on system,
+    // and pkg-config should find the built dynamic libraries
 
     // STEPS TO BUILD A RUST LIB WITH C BINDINGS / WRAP A C LIBRARY
     //
@@ -36,6 +171,7 @@ fn main() {
     //    although the author said: "You could build it --without-tools, 
     //    then you don't need any loaders. The deps will then be glib-2.0 and freetype."
     //    finally, chafa/autogen.sh, then make, then make install, worked
+    //    note: my chafa version is 1.14.0, and my glib version is 2.56.0
     //
     // 1) a header file must exist in this rust project directory root.
     //    probs best simply call it wrapper.h, with contents:
@@ -103,6 +239,12 @@ fn main() {
     // env::set_var("LD_LIBRARY_PATH", "/usr/local/lib"); // didn't help me
     // env::set_var("PKG_CONFIG_ALLOW_SYSTEM_CFLAGS", "1"); // didn't help me
 
+
+    // consider replacing pkg-config with:
+    // https://users.rust-lang.org/t/how-to-make-a-sys-crate/13767/8
+    // "For linking I went with simply outputting cargo:rustc-link-lib= from build.rs, with ability
+    // to set the library path with an environment variable (no pkg-config) and with default path
+    // on Windows set to where the library installer installs the libraries by default."
     let library = pkg_config::probe_library("chafa").expect("Unable to probe chafa library");
 
     let bindings = bindgen::Builder::default()
