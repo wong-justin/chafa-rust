@@ -21,7 +21,9 @@ jobs:
         sudo ldconfig;
 
     - name: Check chafa installation
-      run: echo "::debug $(pkg-config --libs --cflags chafa)"
+      run: >
+        export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig";
+        echo "::debug $(pkg-config --libs --cflags chafa)"
     
     - uses: actions/checkout@v4
       with:
