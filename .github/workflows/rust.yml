@@ -28,12 +28,13 @@ jobs:
     - name: Download glib source
       run: >
         cd /tmp/ &&
-        curl 'https://download.gnome.org/sources/glib/2.80/glib-2.80.0.tar.xz' -O
+        curl 'https://download.gnome.org/sources/glib/2.80/glib-2.80.0.tar.xz' -O &&
+        ls
 
     - name: Build glib
       run: >
         cd /tmp/ &&
-        tar xf glib-*.tar.gz &&
+        tar xf glib-2.80.0.tar.xz &&
         cd glib-* &&
         meson setup _build &&
         meson compile -C _build &&
