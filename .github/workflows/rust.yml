@@ -19,10 +19,12 @@ jobs:
     #   run: >
     #     sudo apt-get install chafa;
     #     sudo ldconfig;
-    
+
+    # meson.build:2422:26: ERROR: python is missing modules: packaging
     - name: Install tools for building C
       run: >
         sudo pipx install meson
+        && sudo pipx install packaging
         && sudo apt-get install ninja-build
         
     - name: Download glib source
@@ -34,11 +36,11 @@ jobs:
     - name: Build glib
       working-directory: /tmp/
       run: >
-        tar xf glib-2.80.0.tar.xz &&
-        cd glib-2.80.0/ &&
-        meson setup _build &&
-        meson compile -C _build &&
-        meson install -C _build 
+        tar xf glib-2.80.0.tar.xz
+        && cd glib-2.80.0/
+        && meson setup _build
+        && meson compile -C _build
+        && meson install -C _build 
 
     #- name: Check chafa installation
     #  run: >
