@@ -32,10 +32,10 @@ jobs:
         ls
 
     - name: Build glib
+      working-directory: /tmp/
       run: >
-        cd /tmp/ &&
         tar xf glib-2.80.0.tar.xz &&
-        cd glib-* &&
+        cd glib-2.80.0/ &&
         meson setup _build &&
         meson compile -C _build &&
         meson install -C _build 
