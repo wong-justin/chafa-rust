@@ -15,25 +15,40 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-    - name: Install chafa
+    # - name: Install chafa
+    #   run: >
+    #     sudo apt-get install chafa;
+    #     sudo ldconfig;
+    
+    - name: Install tools for building C
       run: >
-        sudo apt-get install chafa;
-        sudo ldconfig;
+        sudo pipx install meson
+        && sudo apt-get install ninja-build
+        
+    - name: Download glib source
+      run: >
+        cd /tmp/ &&
+        curl 'https://download.gnome.org/sources/glib/2.80/glib-2.80.0.tar.xz' -O
 
-    - name: Check chafa installation
+    - name: Build glib
       run: >
-        export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig";
-        echo $(ls /usr/local/lib/pkgconfig);
-        echo "::debug $(pkg-config --libs --cflags chafa)"
+        cd /tmp/ &&
+        tar xf glib-*.tar.gz &&
+        cd glib-* &&
+        meson setup _build &&
+        meson compile -C _build &&
+        meson install -C _build 
+
+    #- name: Check chafa installation
+    #  run: >
+    #    export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig";
+    #    echo $(ls /usr/local/lib/pkgconfig);
+    #    echo "::debug $(pkg-config --libs --cflags chafa)"
     
     - uses: actions/checkout@v4
       with:
         ref: ghaction
-    #- name: Install tools for building C
-    #  run: >
-    #    sudo pipx install meson
-    #    && sudo apt-get install ninja-build
-    #- name: Download glib source
+
     #  working-directory: ./chafa-sys/
     #  run: >
     #    mkdir -p ./vendor
