@@ -19,7 +19,10 @@ jobs:
 
     - name: Install MXE build environment
       run: >
-        sudo apt install mxe-x86-64-w64-mingw32.static-cc mxe-x86-64-w64-mingw32.static-glib
+        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 86B72ED9 
+        && sudo add-apt-repository "deb [arch=amd64] https://pkg.mxe.cc/repos/apt `lsb_release -sc` main" 
+        && sudo apt-get update
+        && sudo apt install mxe-x86-64-w64-mingw32.static-cc mxe-x86-64-w64-mingw32.static-glib
         && /usr/lib/mxe/usr/bin/x86_64-w64-mingw32.static-cc --version
         && ls /usr/lib/
     # - name: Install chafa
