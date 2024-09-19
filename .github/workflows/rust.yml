@@ -27,8 +27,8 @@ jobs:
         
     - name: Check MXE installation
       run: >
-        ls /usr/lib/mxe/usr/bin/
-        && /usr/lib/mxe/usr/bin/x86_64-w64-mingw32.static-cc --version
+        ls /usr/lib/mxe/usr/lib/
+        && /usr/lib/mxe/usr/bin/x86_64-w64-mingw32.static-gcc --version
     # - name: Install chafa
     #   run: >
     #     sudo apt-get install chafa;
