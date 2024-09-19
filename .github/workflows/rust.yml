@@ -1,3 +1,4 @@
+
 name: Rust
 
 on:
@@ -15,32 +16,45 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
+
+    - name: Install MXE build environment
+      run: >
+        sudo apt install mxe-x86-64-w64-mingw32.static-cc mxe-x86-64-w64-mingw32.static-glib
+        /usr/lib/mxe/usr/bin/x86_64-w64-mingw32.static-cc --version
     # - name: Install chafa
     #   run: >
     #     sudo apt-get install chafa;
     #     sudo ldconfig;
 
-    # meson.build:2422:26: ERROR: python is missing modules: packaging
-    - name: Install tools for building C
+    - name: Build glib with MXE
       run: >
-        sudo pipx install meson
-        && sudo pipx install packaging
-        && sudo apt-get install ninja-build
-        
-    - name: Download glib source
-      run: >
-        cd /tmp/ &&
-        curl 'https://download.gnome.org/sources/glib/2.80/glib-2.80.0.tar.xz' -L -O &&
-        ls
+        cd /usr/lib/mxe/
+        && sudo make settings.mk
+        && sudo make glib
+      #./configure --host=i686-w64-mingw32.static --enable-static --disable-shared
+      #make
 
-    - name: Build glib
-      working-directory: /tmp/
-      run: >
-        tar xf glib-2.80.0.tar.xz
-        && cd glib-2.80.0/
-        && meson setup _build
-        && meson compile -C _build
-        && meson install -C _build 
+    # meson.build:2422:26: ERROR: python is missing modules: packaging
+    #- name: Install tools for building C
+    #  run: >
+    #    sudo pipx install meson
+    #    && sudo pipx install packaging
+    #    && sudo apt-get install ninja-build
+    #    
+    #- name: Download glib source
+    #  run: >
+    #    cd /tmp/ &&
+    #    curl 'https://download.gnome.org/sources/glib/2.80/glib-2.80.0.tar.xz' -L -O &&
+    #    ls
+
+    #- name: Build glib
+    #  working-directory: /tmp/
+    #  run: >
+    #    tar xf glib-2.80.0.tar.xz
+    #    && cd glib-2.80.0/
+    #    && meson setup _build
+    #    && meson compile -C _build
+    #    && meson install -C _build 
 
     #- name: Check chafa installation
     #  run: >
