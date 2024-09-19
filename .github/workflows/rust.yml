@@ -24,8 +24,11 @@ jobs:
         && sudo add-apt-repository "deb [arch=amd64] https://pkg.mxe.cc/repos/apt focal main" 
         && sudo apt-get update
         && sudo apt install mxe-x86-64-w64-mingw32.static-cc mxe-x86-64-w64-mingw32.static-glib
+        
+    - name: Check MXE installation
+      run: >
+        ls /usr/lib/
         && /usr/lib/mxe/usr/bin/x86_64-w64-mingw32.static-cc --version
-        && ls /usr/lib/
     # - name: Install chafa
     #   run: >
     #     sudo apt-get install chafa;
