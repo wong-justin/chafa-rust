@@ -39,8 +39,8 @@ jobs:
     - name: Download chafa source
       run: >
         cd /tmp/
-        && curl 'https://hpjansson.org/chafa/releases/chafa-1.14.4.tar.xz' -O
-        && tar xf chafa-1.14.4.tar.xz
+        && curl 'https://hpjansson.org/chafa/releases/chafa-1.14.4.tar.xz' > chafa.tar.xz
+        && tar xf chafa.tar.xz
 
     - name: Build chafa with MXE
       run: >
