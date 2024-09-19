@@ -27,7 +27,7 @@ jobs:
         
     - name: Check MXE installation
       run: >
-        ls /usr/lib/
+        ls /usr/lib/mxe/usr/bin/
         && /usr/lib/mxe/usr/bin/x86_64-w64-mingw32.static-cc --version
     # - name: Install chafa
     #   run: >
