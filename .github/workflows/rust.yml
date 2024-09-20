@@ -23,13 +23,15 @@ jobs:
         sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 86B72ED9 
         && sudo add-apt-repository "deb [arch=amd64] https://pkg.mxe.cc/repos/apt focal main" 
         && sudo apt-get update
-        && sudo apt install mxe-x86-64-w64-mingw32.static-cc mxe-x86-64-w64-mingw32.static-glib
+        && sudo apt install mxe-x86-64-w64-mingw32.static-cc mxe-x86_64-w64-mingw32.static-pkg-config mxe-x86-64-w64-mingw32.static-glib mxe-x86-64-w64-mingw32.static-chafa
+        && export PATH=/usr/lib/mxe/usr/bin:$PATH
         && export PATH=/usr/lib/mxe/usr/bin:$PATH
         
     - name: Check MXE installation
       run: >
         ls /usr/lib/mxe/usr/lib/
         && /usr/lib/mxe/usr/bin/x86_64-w64-mingw32.static-gcc --version
+        && /usr/lib/mxe/usr/bin/x86_64-w64-mingw32.static-chafa --version
         && echo $PATH
     # - name: Install chafa
     #   run: >
