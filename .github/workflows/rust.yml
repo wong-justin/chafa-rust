@@ -19,8 +19,9 @@ jobs:
 
     - name: Install MXE build environment
       #&& sudo add-apt-repository "deb [arch=amd64] https://pkg.mxe.cc/repos/apt `lsb_release -sc` main" 
+      #sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 86B72ED9 
       run: >
-        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 86B72ED9 
+        sudo apt-key adv --keyserver https://keyserver.ubuntu.com/pks/lookup?search=0xC6BF758A33A3A276&op=get
         && sudo add-apt-repository "deb [arch=amd64] https://pkg.mxe.cc/repos/apt focal main" 
         && sudo apt-get update
         && sudo apt install mxe-x86-64-w64-mingw32.static-cc mxe-x86_64-w64-mingw32.static-pkg-config mxe-x86-64-w64-mingw32.static-glib mxe-x86-64-w64-mingw32.static-chafa
