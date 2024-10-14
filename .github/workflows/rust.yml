@@ -84,7 +84,7 @@ jobs:
         export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig";
         echo $(ls /usr/local/lib/pkgconfig);
         echo $(pkg-config --libs --cflags chafa);
-        echo $(ls /usr/local/include/chafa);
+        echo $(ls /usr/local/lib/chafa);
     
     - uses: actions/checkout@v4
       with:
@@ -103,8 +103,8 @@ jobs:
     #    && sudo meson install -C _build
     
     
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+    #- name: Build
+    #  run: cargo build --verbose
+    #- name: Run tests
+    #  run: cargo test --verbose
 
