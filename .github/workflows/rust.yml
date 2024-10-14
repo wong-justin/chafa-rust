@@ -89,7 +89,7 @@ jobs:
     - name: Build chafa
       run: >
         cd /tmp/chafa-1.14.4
-        && ./configure
+        && ./configure --without-tools
         && make
 
     - name: Check chafa installation
