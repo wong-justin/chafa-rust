@@ -92,6 +92,7 @@ jobs:
         && ./configure --without-tools
         && make
         && sudo make install
+        && sudo ldconfig
 
     - name: Check chafa installation
       run: >
