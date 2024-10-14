@@ -83,7 +83,8 @@ jobs:
       run: >
         export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig";
         echo $(ls /usr/local/lib/pkgconfig);
-        echo $(pkg-config --libs --cflags chafa)
+        echo $(pkg-config --libs --cflags chafa);
+        echo $(ls /usr/local/include/chafa);
     
     - uses: actions/checkout@v4
       with:
