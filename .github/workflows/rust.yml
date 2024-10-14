@@ -77,7 +77,7 @@ jobs:
 
     - name: Install chafa
       run:
-        apt install chafa
+        sudo apt-get install -y chafa
 
     - name: Check chafa installation
       run: >
