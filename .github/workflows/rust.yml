@@ -75,16 +75,24 @@ jobs:
     #    && meson compile -C _build
     #    && meson install -C _build 
 
-    - name: Install chafa
-      run:
-        sudo apt-get install -y chafa && sudo ldconfig
+    - name: Download chafa source
+      run: >
+        cd /tmp
+        && curl 'https://hpjansson.org/chafa/releases/chafa-1.14.4.tar.xz' -O
+        && tar xf chafa-1.14.4.tar.xz
+
+
+    - name: Build chafa
+      run: >
+        cd /tmp/chafa-1.14.4
+        && ./configure
+        && make
 
     - name: Check chafa installation
       run: >
         export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig";
         echo $(ls /usr/local/lib/pkgconfig);
         echo $(pkg-config --libs --cflags chafa);
-        echo $(whereis chafa);
     
     - uses: actions/checkout@v4
       with:
