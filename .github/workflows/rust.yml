@@ -75,6 +75,10 @@ jobs:
     #    && meson compile -C _build
     #    && meson install -C _build 
 
+    - name: Install glib dev files
+      run:
+        sudo apt-get install libglib2.0-dev
+
     - name: Download chafa source
       run: >
         cd /tmp
