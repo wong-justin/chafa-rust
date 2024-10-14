@@ -91,6 +91,7 @@ jobs:
         cd /tmp/chafa-1.14.4
         && ./configure --without-tools
         && make
+        && sudo make install
 
     - name: Check chafa installation
       run: >
