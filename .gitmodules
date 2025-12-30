@@ -1,6 +1,0 @@
-[submodule "chafa-sys/vendor/chafa"]
-	path = chafa-sys/vendor/chafa
-	url = https://github.com/hpjansson/chafa.git
-[submodule "chafa-sys/vendor/glib"]
-	path = chafa-sys/vendor/glib
-	url = https://github.com/GNOME/glib.git
