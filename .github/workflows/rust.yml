@@ -74,6 +74,10 @@ jobs:
     #    && meson setup _build
     #    && meson compile -C _build
     #    && meson install -C _build 
+        
+    - name: Update apt
+      run:
+        sudo apt-get update
 
     - name: Install glib dev files
       run:
