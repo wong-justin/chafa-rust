@@ -1,4 +1,4 @@
-# chafa-rust (wip)
+# chafa-rust
 
 Rust bindings for [chafa](https://github.com/hpjansson/chafa), a terminal graphics library:
 
@@ -59,10 +59,6 @@ fn main() {
 |----------------------------------------------|---------------------------------------------------------------------|
 | ![original flowery image](examples/test.png) | ![flowery image displayed in terminal](examples/output_capture.png) |
 
-## Docs
-
-See the [chafa C API](https://hpjansson.org/chafa/ref/index.html).
-
 ## Usage
 
 Install `chafa` with its dependency [`glib`](https://docs.gtk.org/glib/), either from your package manager or from source.
@@ -104,7 +100,11 @@ Other people have statically linked `chafa` & `glib` in other environments -- se
 
 ### Extra
 
-You can enable the optional `["image"]` feature to access `chafa::extra::image2ansi`, which might be useful for casual usage.
+You can enable the optional `["image"]` feature to access `chafa::extra::image2ansi`, which might be helpful for casual usage.
+
+## Docs
+
+See the [chafa C API](https://hpjansson.org/chafa/ref/index.html).
 
 ## Status
 
