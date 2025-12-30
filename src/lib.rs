@@ -1,6 +1,6 @@
-mod chafa;
+#![allow(non_snake_case)]
 
-use chafa_sys::*;
+pub use chafa_sys::*;
 
 #[cfg(feature = "image")]
 pub mod extra;
@@ -8,52 +8,52 @@ pub mod extra;
 // --- hacky bitflags --- //
 
 pub mod Symbols {
-    pub const NONE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_NONE;
-    pub const SPACE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_SPACE;
-    pub const SOLID : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_SOLID;
-    pub const STIPPLE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_STIPPLE;
-    pub const BLOCK : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BLOCK;
-    pub const BORDER : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BORDER;
-    pub const DIAGONAL : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_DIAGONAL;
-    pub const DOT : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_DOT;
-    pub const QUAD : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_QUAD;
-    pub const HHALF : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_HHALF;
-    pub const VHALF : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_VHALF;
-    pub const HALF : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_HALF;
-    pub const INVERTED : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_INVERTED;
-    pub const BRAILLE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BRAILLE;
-    pub const TECHNICAL : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_TECHNICAL;
-    pub const GEOMETRIC : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_GEOMETRIC;
-    pub const ASCII : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ASCII;
-    pub const ALPHA : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALPHA;
-    pub const DIGIT : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_DIGIT;
-    pub const ALNUM : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALNUM;
-    pub const NARROW : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_NARROW;
-    pub const WIDE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_WIDE;
-    pub const AMBIGUOUS : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_AMBIGUOUS;
-    pub const UGLY : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_UGLY;
-    pub const LEGACY : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_LEGACY;
-    pub const SEXTANT : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_SEXTANT;
-    pub const WEDGE : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_WEDGE;
-    pub const LATIN : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_LATIN;
-    pub const IMPORTED : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_IMPORTED;
-    pub const EXTRA : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_EXTRA;
-    pub const BAD : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BAD;
-    pub const ALL : i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALL;
+    pub const NONE: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_NONE;
+    pub const SPACE: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_SPACE;
+    pub const SOLID: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_SOLID;
+    pub const STIPPLE: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_STIPPLE;
+    pub const BLOCK: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BLOCK;
+    pub const BORDER: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BORDER;
+    pub const DIAGONAL: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_DIAGONAL;
+    pub const DOT: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_DOT;
+    pub const QUAD: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_QUAD;
+    pub const HHALF: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_HHALF;
+    pub const VHALF: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_VHALF;
+    pub const HALF: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_HALF;
+    pub const INVERTED: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_INVERTED;
+    pub const BRAILLE: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BRAILLE;
+    pub const TECHNICAL: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_TECHNICAL;
+    pub const GEOMETRIC: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_GEOMETRIC;
+    pub const ASCII: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ASCII;
+    pub const ALPHA: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALPHA;
+    pub const DIGIT: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_DIGIT;
+    pub const ALNUM: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALNUM;
+    pub const NARROW: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_NARROW;
+    pub const WIDE: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_WIDE;
+    pub const AMBIGUOUS: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_AMBIGUOUS;
+    pub const UGLY: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_UGLY;
+    pub const LEGACY: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_LEGACY;
+    pub const SEXTANT: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_SEXTANT;
+    pub const WEDGE: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_WEDGE;
+    pub const LATIN: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_LATIN;
+    pub const IMPORTED: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_IMPORTED;
+    pub const EXTRA: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_EXTRA;
+    pub const BAD: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_BAD;
+    pub const ALL: i32 = chafa_sys::ChafaSymbolTags_CHAFA_SYMBOL_TAG_ALL;
 }
 
 pub mod PixelType {
     // std::os::raw:c_uint is pretty much u32
-    pub const RGBA8_PREMULTIPLIED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_RGBA8_PREMULTIPLIED;
-    pub const BGRA8_PREMULTIPLIED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_BGRA8_PREMULTIPLIED;
-    pub const ARGB8_PREMULTIPLIED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ARGB8_PREMULTIPLIED;
-    pub const ABGR8_PREMULTIPLIED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ABGR8_PREMULTIPLIED;
-    pub const RGBA8_UNASSOCIATED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_RGBA8_UNASSOCIATED;
-    pub const BGRA8_UNASSOCIATED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_BGRA8_UNASSOCIATED;
-    pub const ARGB8_UNASSOCIATED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ARGB8_UNASSOCIATED;
-    pub const ABGR8_UNASSOCIATED : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ABGR8_UNASSOCIATED;
-    pub const RGB8 : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_RGB8;
-    pub const BGR8 : u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_BGR8;
+    pub const RGBA8_PREMULTIPLIED: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_RGBA8_PREMULTIPLIED;
+    pub const BGRA8_PREMULTIPLIED: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_BGRA8_PREMULTIPLIED;
+    pub const ARGB8_PREMULTIPLIED: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ARGB8_PREMULTIPLIED;
+    pub const ABGR8_PREMULTIPLIED: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ABGR8_PREMULTIPLIED;
+    pub const RGBA8_UNASSOCIATED: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_RGBA8_UNASSOCIATED;
+    pub const BGRA8_UNASSOCIATED: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_BGRA8_UNASSOCIATED;
+    pub const ARGB8_UNASSOCIATED: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ARGB8_UNASSOCIATED;
+    pub const ABGR8_UNASSOCIATED: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_ABGR8_UNASSOCIATED;
+    pub const RGB8: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_RGB8;
+    pub const BGR8: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_BGR8;
 }
 
 // --- structs holding C pointers and associated functions --- //
@@ -67,11 +67,10 @@ pub type SymbolTagsFlag = i32;
 pub type PixelTypeFlag = u32;
 
 impl SymbolMap {
-
     pub fn new() -> Self {
         unsafe {
             Self {
-                _ptr : chafa_sys::chafa_symbol_map_new()
+                _ptr: chafa_sys::chafa_symbol_map_new(),
             }
         }
     }
@@ -82,7 +81,7 @@ impl SymbolMap {
     // CHAFA_SYMBOL_TAG_VHALF works well by itself."
     //
     // https://hpjansson.org/chafa/ref/chafa-ChafaSymbolMap.html
-    pub fn add_by_tags(&self, symbol_tags : SymbolTagsFlag) {
+    pub fn add_by_tags(&self, symbol_tags: SymbolTagsFlag) {
         unsafe {
             chafa_symbol_map_add_by_tags(self._ptr, symbol_tags);
         }
@@ -114,31 +113,27 @@ impl Config {
     pub fn new() -> Self {
         unsafe {
             Self {
-                _ptr : chafa_sys::chafa_canvas_config_new()
+                _ptr: chafa_sys::chafa_canvas_config_new(),
             }
         }
     }
 
-    pub fn set_geometry(&self, width : i32, height : i32) {
+    pub fn set_geometry(&self, width: i32, height: i32) {
         unsafe {
-            chafa_sys::chafa_canvas_config_set_geometry(self._ptr, 
-                                                        width,
-                                                        height);
+            chafa_sys::chafa_canvas_config_set_geometry(self._ptr, width, height);
         }
     }
 
-    pub fn set_symbol_map(&self, symbol_map : SymbolMap) {
+    pub fn set_symbol_map(&self, symbol_map: SymbolMap) {
         unsafe {
-            chafa_sys::chafa_canvas_config_set_symbol_map(self._ptr,
-                                                          symbol_map._ptr);
+            chafa_sys::chafa_canvas_config_set_symbol_map(self._ptr, symbol_map._ptr);
         }
     }
 
-    pub fn set_work_factor(&self, work_factor : f32) {
+    pub fn set_work_factor(&self, work_factor: f32) {
         // work_factor from 0.0 to 1.0
         unsafe {
-            chafa_sys::chafa_canvas_config_set_work_factor(self._ptr,
-                                                           work_factor);
+            chafa_sys::chafa_canvas_config_set_work_factor(self._ptr, work_factor);
         }
     }
 
@@ -159,35 +154,38 @@ pub struct Canvas {
 }
 
 impl Canvas {
-    pub fn new(config : Config) -> Self {
+    pub fn new(config: Config) -> Self {
         unsafe {
             Self {
-                _ptr : chafa_sys::chafa_canvas_new(config._ptr)
+                _ptr: chafa_sys::chafa_canvas_new(config._ptr),
             }
         }
     }
 
     // "Replaces pixel data of canvas with a copy of that found at src_pixels"
-    pub fn draw_all_pixels(&self,
-                                  pixel_type : PixelTypeFlag,
-                                  pixels : &[u8],
-                                  width: i32,    
-                                  height: i32,   
-                                  rowstride: i32)
-    {
+    pub fn draw_all_pixels(
+        &self,
+        pixel_type: PixelTypeFlag,
+        pixels: &[u8],
+        width: i32,
+        height: i32,
+        rowstride: i32,
+    ) {
         unsafe {
-         chafa_canvas_draw_all_pixels(self._ptr,
-                                      pixel_type,
-                                      pixels.as_ptr(),
-                                      width,
-                                      height,
-                                      rowstride);
+            chafa_canvas_draw_all_pixels(
+                self._ptr,
+                pixel_type,
+                pixels.as_ptr(),
+                width,
+                height,
+                rowstride,
+            );
         }
     }
 
     pub fn build_ansi(&self) -> String {
         unsafe {
-            let gstr : *mut _GString = chafa_canvas_build_ansi(self._ptr);
+            let gstr: *mut _GString = chafa_canvas_build_ansi(self._ptr);
 
             // wrapping raw bytes of C strings into friendly Rust types,
             // so output can be manipulated in Rust and passed to println,
@@ -228,14 +226,12 @@ impl core::ops::Drop for Canvas {
 //      height : gint ,
 //      rowstride : gint
 // ) -> * mut ChafaFrame ;
-  
-  
+
 // > "A ChafaTermInfo describes the characteristics of one particular kind of display terminal. It
 // > stores control sequences that can be used to move the cursor, change text attributes, mark the
 // > beginning and end of sixel graphics data, etc.
 // > ChafaTermInfo also implements an efficient low-level API for formatting these sequences with
 // > marshaled arguments so they can be sent to the terminal."
-
 
 // chafa uses three different types of dimensions:
 // - src height and width (ie. image size)
@@ -244,14 +240,14 @@ impl core::ops::Drop for Canvas {
 //
 // example:                      viewport
 //                               300x200
-//                              ┌──────┌──────────┐──────┐ 
-//  src_image                   │      │  canvas  │      │ 
-//    10x20                     │      │  100x200 │      │ 
-//    ┌───┐                     │      │          │      │ 
-//    │   │                     │      │          │      │ 
-//    │   │                     │      │          │      │ 
-//    └───┘                     │      │          │      │ 
-//                              └──────└──────────┘──────┘ 
+//                              ┌──────┌──────────┐──────┐
+//  src_image                   │      │  canvas  │      │
+//    10x20                     │      │  100x200 │      │
+//    ┌───┐                     │      │          │      │
+//    │   │                     │      │          │      │
+//    │   │                     │      │          │      │
+//    └───┘                     │      │          │      │
+//                              └──────└──────────┘──────┘
 //
 // Canvas holds Image, and Image holds Frame
 
@@ -261,11 +257,12 @@ mod tests {
 
     #[test]
     fn test_one_pixel_output() {
+        // https://hpjansson.org/chafa/ref/chafa-using.html
         // just a red block char
-        const PIX_WIDTH : i32 = 1;
-        const PIX_HEIGHT : i32 = 1;
-        const N_CHANNELS : i32 = 4;
-        let pixels : [u8; 4] = [0xff, 0x00, 0x00, 0xff];
+        const PIX_WIDTH: i32 = 1;
+        const PIX_HEIGHT: i32 = 1;
+        const N_CHANNELS: i32 = 4;
+        let pixels: [u8; 4] = [0xff, 0x00, 0x00, 0xff];
 
         let symbol_map = SymbolMap::new();
         symbol_map.add_by_tags(Symbols::BLOCK);
@@ -276,13 +273,15 @@ mod tests {
 
         let canvas = Canvas::new(config);
 
-        canvas.draw_all_pixels(PixelType::RGBA8_UNASSOCIATED,
-                               &pixels,
-                               PIX_WIDTH,
-                               PIX_HEIGHT,
-                               PIX_WIDTH * N_CHANNELS);
+        canvas.draw_all_pixels(
+            PixelType::RGBA8_UNASSOCIATED,
+            &pixels,
+            PIX_WIDTH,
+            PIX_HEIGHT,
+            PIX_WIDTH * N_CHANNELS,
+        );
 
-        let output : String = canvas.build_ansi();
+        let output: String = canvas.build_ansi();
         assert_eq!(output, "[0m[38;2;254;0;0m█[0m");
     }
 }
