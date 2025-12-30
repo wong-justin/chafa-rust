@@ -42,7 +42,6 @@ fn main() {
 
     println!("{}", output);
 }
-
 ```
 
 Or using a convenience function: `examples/image2ansi.rs`
@@ -100,16 +99,25 @@ This crate has two cargo build features: `["link-dynamic"]` or `["link-static"]`
 You must choose one.
 
 Static builds have been trickier in my experience, mainly due to `glib` compilation errors.
-I was able to make a statically linked build in an Alpine [Dockerfile].
+I was able to make a statically linked build in an Alpine [Dockerfile](https://github.com/wong-justin/vic/blob/main/Dockerfile).
 Other people have statically linked `chafa` & `glib` in other environments -- see [vic issue #1](https://github.com/wong-justin/vic/issues/1) to explore those options.
 
-## This crate does not:
+### Extra
+
+You can enable the optional `["image"]` feature to access `chafa::extra::image2ansi`, which might be useful for casual usage.
+
+## Status
+
+This crate does not:
 
 - build `chafa` or `glib` from source (yet).
 - test builds on Windows or macOS (yet).
 
 If you need those things, I recommend modifying `chafa-sys/build.rs` or writing your own containerized build script.
 If you can vendor `chafa` and `glib` and build them from source in `chafa-sys/build.rs`, or if you have changes that make the build work on Windows or macOS, or if you have usability suggestions in general, your contribution would be appreciated.
+
+`src/lib.rs` currently covers a minimal but usable amount of chafa functions.
+Parity with [chafa's Python bindings](https://github.com/GuardKenzie/chafa.py) is a stretch goal.
 
 ## Licenses
 
