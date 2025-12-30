@@ -2,7 +2,8 @@ mod chafa;
 
 use chafa_sys::*;
 
-use image::ImageBuffer;
+#[cfg(feature = "image")]
+pub mod extra;
 
 // --- hacky bitflags --- //
 
@@ -216,89 +217,10 @@ impl core::ops::Drop for Canvas {
     }
 }
 
-
-// --- convience abstracted functions --- //
-
-
-// TODO potential functions:
-//
-// fn image2pixels - when you need image data but don't want to display yet
-// fn pixels2ansi - when frames come from other sources, like reading video frames
-// fn images2ansi - keep the canvas around for continuous use, eg. animated gifs
-
-
-// very similar to: https://hpjansson.org/chafa/ref/chafa-using.html
-pub fn image2ansi<P>(path: P, (cols, rows) : (u32, u32)) -> Result<String, image::ImageError>
-    where P: AsRef<std::path::Path> 
-{
-
-    // --- IMAGE DATA --- //
-
-    // how to get pixel data from image files in rust?
-    // image crate seems like most popular option
-    // https://crates.io/search?q=image%20pixels
-    // https://docs.rs/crate/image/0.23.14
-    // https://docs.rs/image/0.23.14/image/
-    // MIT license, many millions of downloads, created ~2021
-    // 8.75MB feels awful heavy though
-    // 
-    let img : ImageBuffer<image::Rgba<u8>, Vec<u8>> = image::open(path)?.to_rgba8();
-
-    // chafa has variations of 8bit rgb channels...
-    //
-    // RGBA8_PREMULTIPLIED, RGBA8_UNASSOCIATED, BGRA_PREMULTIPLIED, ... 
-    //
-    // while the image crate accepts more channel types and bit depths:
-    //
-    // L8 (8bit luminance, ie. grayscale)
-    // La8 (8bit luminance with transparency)
-    // Rgb8 (etc)
-    // Rgba8
-    // L16
-    // La16
-    // Rgb16
-    // Rgba16
-    // Bgr8
-    // Bgra8
-    //
-    // I'll just force rgba8 for now
-
-    let num_channels = 4; // since everything is rgba8 // = img.color().channel_count().into();
-    let src_width : i32 = img.width().try_into().unwrap();
-    let src_height : i32 = img.height().try_into().unwrap();
-    let pixels : Vec<u8> = img.into_raw();
-
-    // --- CHAFA CONFIG --- //
-    
-
-    let symbol_map = SymbolMap::new();
-    symbol_map.add_by_tags(Symbols::BLOCK);
-
-    let config = Config::new();
-    config.set_geometry(cols as i32, rows as i32);
-    config.set_symbol_map(symbol_map);
-    config.set_work_factor(1.0);
-
-    let canvas = Canvas::new(config);
-
-    // --- OUTPUT --- //
-    
-    canvas.draw_all_pixels(PixelType::RGBA8_UNASSOCIATED,
-                           &pixels,
-                           src_width,
-                           src_height,
-                           src_width * num_channels);
-
-
-    let result = canvas.build_ansi();
-    return Ok(result);
-}
-
-  
-// struct ChafaImage { _unused : [u8 ; 0] , } 
+// struct ChafaImage { _unused : [u8 ; 0] , }
 // fn chafa_image_new () -> * mut ChafaImage ;
 //
-// struct ChafaFrame { _unused : [u8 ; 0] , } 
+// struct ChafaFrame { _unused : [u8 ; 0] , }
 // fn chafa_frame_new (
 //      data : gconstpointer ,
 //      pixel_type : ChafaPixelType ,

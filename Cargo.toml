@@ -8,5 +8,14 @@ edition = "2021"
 
 [dependencies]
 chafa-sys = { path = "chafa-sys" }
-image = "0.23.14" # highest version that works with rustc v1.65
-# vendored C libs: chafa and glib-2.0
+image = { version = "0.23.14", optional = true } # highest version that works with rustc v1.65
+# image reading and writing is optional, extra functionality, esp for demo examples
+# how to get pixel data from image files in rust?
+# image crate seems like most popular option
+# https://crates.io/search?q=image%20pixels
+# https://docs.rs/crate/image/0.23.14
+# https://docs.rs/image/0.23.14/image/
+# MIT license; created ~2021; 8.75MB 
+
+[features]
+image = ["dep:image"]
