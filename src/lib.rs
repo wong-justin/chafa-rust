@@ -76,7 +76,7 @@ pub mod CanvasMode {
     pub const FGBG: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_FGBG;
     pub const INDEXED_8: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_INDEXED_8;
     pub const INDEXED_16_8: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_INDEXED_16_8;
-    pub const MAX: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_INDEXED_MAX;
+    pub const MAX: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_MAX;
 }
 
 // --- structs holding C pointers and associated functions --- //
