@@ -18,4 +18,6 @@ image = { version = "0.23.14", optional = true } # highest version that works wi
 # MIT license; created ~2021; 8.75MB 
 
 [features]
+link-dynamic = ["chafa-sys/link-dynamic"]
+link-static = ["chafa-sys/link-static"]
 image = ["dep:image"]
