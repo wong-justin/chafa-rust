@@ -34,7 +34,7 @@ Typical usage:
 
 ```toml
 [dependencies]
-chafa = { git = "https://github.com/wong-justin/chafa-rust.git", tag = "0.3.0", features = ["link-dynamic"] }
+chafa = { git = "https://github.com/wong-justin/chafa-rust.git", tag = "0.4.0", features = ["link-dynamic"] }
 ``` 
 
 <!-- for an example of a rust project using chafa, see [vic]. -->
