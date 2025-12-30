@@ -56,6 +56,29 @@ pub mod PixelType {
     pub const BGR8: u32 = chafa_sys::ChafaPixelType_CHAFA_PIXEL_BGR8;
 }
 
+// hide for now
+// only necessary for sixel/kitty passthrough, which is not a priority personally
+// and this feature is on newer chafa versions (1.14?)
+// which might be a compatibility issue for a small number of people
+//
+// pub mod Passthrough {
+//     pub const NONE: u32 = chafa_sys::ChafaPassthrough_CHAFA_PASSTHROUGH_NONE;
+//     pub const SCREEN: u32 = chafa_sys::ChafaPassthrough_CHAFA_PASSTHROUGH_SCREEN;
+//     pub const TMUX: u32 = chafa_sys::ChafaPassthrough_CHAFA_PASSTHROUGH_TMUX;
+// }
+
+pub mod CanvasMode {
+    pub const TRUECOLOR: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_TRUECOLOR;
+    pub const INDEXED_256: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_INDEXED_256;
+    pub const INDEXED_240: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_INDEXED_240;
+    pub const INDEXED_16: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_INDEXED_16;
+    pub const FGBG_BGFG: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_FGBG_BGFG;
+    pub const FGBG: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_FGBG;
+    pub const INDEXED_8: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_INDEXED_8;
+    pub const INDEXED_16_8: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_INDEXED_16_8;
+    pub const MAX: u32 = chafa_sys::ChafaCanvasMode_CHAFA_CANVAS_MODE_INDEXED_MAX;
+}
+
 // --- structs holding C pointers and associated functions --- //
 // most of the _ptrs are for naive structs that look like { _unused : [u8 ; 0] , }
 
@@ -65,6 +88,8 @@ pub struct SymbolMap {
 
 pub type SymbolTagsFlag = i32;
 pub type PixelTypeFlag = u32;
+// pub type PassthroughEnum = u32;
+pub type CanvasModeEnum = u32;
 
 impl SymbolMap {
     pub fn new() -> Self {
@@ -137,8 +162,17 @@ impl Config {
         }
     }
 
-    // TODO:
-    // all the other config options
+    // pub fn set_passthrough(&self, passthrough: PassthroughEnum) {
+    //     unsafe {
+    //         chafa_sys::chafa_canvas_config_set_passthrough(self._ptr, passthrough);
+    //     }
+    // }
+
+    pub fn set_canvas_mode(&self, canvas_mode: CanvasModeEnum) {
+        unsafe {
+            chafa_sys::chafa_canvas_config_set_passthrough(self._ptr, canvas_mode);
+        }
+    }
 }
 
 impl core::ops::Drop for Config {
