@@ -9,7 +9,13 @@ Rust bindings for [chafa](https://github.com/hpjansson/chafa), a terminal graphi
 
 ## Demo
 
-Using a convenience function: `examples/image2ansi.rs`
+Using the chafa API: `examples/demo.rs`
+
+```rust
+include({{examples/demo.rs}})dnl
+```
+
+Or using a convenience function: `examples/image2ansi.rs`
 
 ```rust
 include({{examples/image2ansi.rs}})dnl
@@ -19,7 +25,6 @@ include({{examples/image2ansi.rs}})dnl
 |----------------------------------------------|---------------------------------------------------------------------|
 | ![original flowery image](examples/test.png) | ![flowery image displayed in terminal](examples/output_capture.png) |
 
-Or using the normal chafa API: `examples/demo.rs`
 ## Docs
 
 See the [chafa C API](https://hpjansson.org/chafa/ref/index.html).

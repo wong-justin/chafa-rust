@@ -6,22 +6,7 @@ Rust bindings for [chafa](https://github.com/hpjansson/chafa), a terminal graphi
 
 ## Demo
 
-Using a convenience function: `examples/image2ansi.rs`
-
-```rust
-use chafa::image2ansi;
-
-fn main() {
-    let output = image2ansi("examples/test.png", (33, 16)).unwrap();
-    println!("{}", output);
-}
-```
-
-| Before                                       | After                                                               |
-|----------------------------------------------|---------------------------------------------------------------------|
-| ![original flowery image](examples/test.png) | ![flowery image displayed in terminal](examples/output_capture.png) |
-
-Or using the normal chafa API: `examples/demo.rs`
+Using the chafa API: `examples/demo.rs`
 
 ```rust
 use chafa::{Canvas, Config, PixelType, SymbolMap, Symbols};
