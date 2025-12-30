@@ -59,7 +59,7 @@ fn main() {
 |----------------------------------------------|---------------------------------------------------------------------|
 | ![original flowery image](examples/test.png) | ![flowery image displayed in terminal](examples/output_capture.png) |
 
-## Usage
+## Installation & Usage
 
 Install `chafa` with its dependency [`glib`](https://docs.gtk.org/glib/), either from your package manager or from source.
 Then put this crate in your Rust project.
@@ -68,7 +68,7 @@ Typical usage:
 
 ```toml
 [dependencies]
-chafa = { features = ["link-dynamic"] }
+chafa = { git = "https://github.com/wong-justin/chafa-rust.git", tag = "0.3.0", features = ["link-dynamic"] }
 ``` 
 
 <!-- for an example of a rust project using chafa, see [vic]. -->
@@ -91,7 +91,7 @@ This may be useful when:
 
 ### 2) Choose dynamic or static linking
 
-This crate has two cargo build features: `["link-dynamic"]` or `["link-static"]`.
+This crate has two build features: `["link-dynamic"]` or `["link-static"]`.
 You must choose one.
 
 Static builds have been trickier in my experience, mainly due to `glib` compilation errors.
@@ -101,10 +101,6 @@ Other people have statically linked `chafa` & `glib` in other environments -- se
 ### Extra
 
 You can enable the optional `["image"]` feature to access `chafa::extra::image2ansi`, which might be helpful for casual usage.
-
-## Docs
-
-See the [chafa C API](https://hpjansson.org/chafa/ref/index.html).
 
 ## Status
 
@@ -118,6 +114,10 @@ If you can vendor `chafa` and `glib` and build them from source in `chafa-sys/bu
 
 `src/lib.rs` currently covers a minimal but usable amount of chafa functions.
 Parity with [chafa's Python bindings](https://github.com/GuardKenzie/chafa.py) is a stretch goal.
+
+## Docs
+
+See the [chafa C API](https://hpjansson.org/chafa/ref/index.html) and the supported subset of functions and structs in `src/lib.rs`.
 
 ## Licenses
 
